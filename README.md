@@ -1,6 +1,6 @@
-# RDF Molecules Similarity Service (SimMol)
+# RDF Molecules Similarity Service - SimMol
 
-![Logo](https://cloud.githubusercontent.com/assets/4923203/15185984/39e36d62-1769-11e6-993f-cbe815ded833.pn## Description
+## Description
 SimMol provides different state of the art RDF Molecules similarity metrics such as GADES as REST Service
 
 ## Dependencies
@@ -26,13 +26,38 @@ SimMol server will listen on port 9000.
 
 
 ### Configuration
+In application.config configure either two datasets or just one dataset containing the RDF Molecules of data. The datasets will be loaded in the services at starting time.
 
 ### Request
 
+```json
+{
+ "tasks" : [ {
+    "uri1" : "http://www4.wiwiss.fu-berlin.de/drugbank/resource/drugs/DB01050",
+    "uri2" : "http://dbpedia.org/resource/Ibuprofen"
+  }, {
+    "uri1" : "http://dbpedia.org/resource/Pindolol",
+    "uri2" : "http://www4.wiwiss.fu-berlin.de/drugbank/resource/drugs/DB00960"
+  } ]
+}
+```
 
 ### Response
 
-
+```json
+[
+  {
+    "uri1": "http://www4.wiwiss.fu-berlin.de/drugbank/resource/drugs/DB01050",
+    "uri2": "http://dbpedia.org/resource/Ibuprofen",
+    "value": 0.096
+  },
+  {
+    "uri1": "http://dbpedia.org/resource/Pindolol",
+    "uri2": "http://www4.wiwiss.fu-berlin.de/drugbank/resource/drugs/DB00960",
+    "value": 0.137
+  }
+]
+```
 
 ## License
 
