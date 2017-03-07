@@ -29,7 +29,7 @@ Send POST request to the following address http://localhost:9000/similarity
 ### Configuration
 In application.config configure either two datasets or just one dataset containing the RDF Molecules of data. The datasets will be loaded in the services at starting time.
 
-```json
+```
 similarity.function {
  
   model1_location = "Home/Drugbank/dataset_20100405.nt"
