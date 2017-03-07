@@ -14,7 +14,7 @@ Download Play: https://www.playframework.com/download
 ## Install and build from the source code  
 To obtain the latest version of the project please clone the github repository
 
-    $ git clone https://github.com/LiDaKrA/FuhSen-reactive.git
+    $ git clone https://github.com/RDF-Molecules/sim_service.git
 
 To run the project you need "Activator 1.3.12" installed and execute the following command from the root folder of the project.
 
