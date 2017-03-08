@@ -24,7 +24,7 @@ SimMol server will listen on port 9000.
 
 ### Example Usage
 
-Send POST request to the following address http://localhost:9000/similarity
+Send POST request to the following address http://localhost:9000/similarity/<similarity_function>
 
 ### Configuration
 In application.config configure either two datasets or just one dataset containing the RDF Molecules of data. The datasets will be loaded in the services at starting time.
@@ -40,7 +40,14 @@ similarity.function {
 
 ### Request
 
-Send an array of tuples containing the uris of the molecules to be compared
+Currently we support two similarity functions: jaccard and gades 
+You can choose any of them by adding the name of the function in the url 
+
+http://localhost:9000/similarity/jaccard
+or
+http://localhost:9000/similarity/gades
+
+Teh body of the request should contain JSON with an array of tuples containing the uris of the molecules to be compared
 
 ```json
 {
@@ -53,6 +60,10 @@ Send an array of tuples containing the uris of the molecules to be compared
   } ]
 }
 ```
+
+
+**References**
+[1] Ignacio Traverso-Ribón, Maria-Esther Vidal, Benedikt Kämpgen and York Sure-Vetter. GADES: A Graph-based Semantic Similarity Measure. Semantics 2016, Leipzig.
 
 ### Response
 
