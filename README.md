@@ -24,7 +24,7 @@ SimMol server will listen on port 9000.
 
 ### Example Usage
 
-Send POST request to the following address http://localhost:9000/similarity/<similarity_function>
+Send POST request to the following address http://localhost:9000/similarity/(function_name)
 
 ### Configuration
 In application.config configure either two datasets or just one dataset containing the RDF Molecules of data. The datasets will be loaded in the services at starting time.
@@ -47,7 +47,7 @@ http://localhost:9000/similarity/jaccard
 or
 http://localhost:9000/similarity/gades
 
-Teh body of the request should contain JSON with an array of tuples containing the uris of the molecules to be compared
+The body of the request should contain JSON with an array of tuples containing the uris of the molecules to be compared
 
 ```json
 {
