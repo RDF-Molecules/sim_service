@@ -134,12 +134,17 @@ public class MyOWLIndividual extends MyOWLLogicalEntity{
 		return o.prof(this.ind);
 	}
 	
-	public double similarity(MyOWLIndividual c) throws Exception
+	public double similarity(MyOWLIndividual c, String method) throws Exception
 	{
 		if (this == c)
 			return 1.0;
 		
-		double sim = Jaccard(c);//OnSim(c);//
+		double sim = 0.0;
+
+        if (method.equals("jaccard"))
+		    sim = Jaccard(c);//
+        if (method.equals("gades"))
+            sim = OnSim(c);//
 
 		return sim;
 	}

@@ -13,7 +13,7 @@ trait SimilarityTrait {
 
   def initialize(model_1 :String, model_2 : String)
 
-  def similarity(uri_1 :String, uri_2: String) : Double
+  def similarity(uri_1 :String, uri_2: String, method: String) : Double
 
 }
 
@@ -52,15 +52,15 @@ object GADES extends SimilarityTrait {
 
   }
 
-  override def similarity(uri_1 :String, uri_2: String) : Double = {
-    Logger.info(s"Computing similarity for $uri_1 and $uri_2")
+  override def similarity(uri_1 :String, uri_2: String, method: String) : Double = {
+    Logger.info(s"Computing $method similarity for $uri_1 and $uri_2")
     val individual_1 = o.getMyOWLIndividual(uri_1)
     val individual_2 = o.getMyOWLIndividual(uri_2)
 
     //Logger.info("taxSim:  "+individual_1.taxonomicSimilarity(individual_2))
     //Logger.info("neighSim:  "+individual_1.similarityNeighbors(individual_2))
 
-    individual_1.similarity(individual_2)
+    individual_1.similarity(individual_2, method)
 
   }
 
