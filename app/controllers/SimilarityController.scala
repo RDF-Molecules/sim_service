@@ -16,13 +16,20 @@ class SimilarityController @Inject() extends Controller {
     * Create an action that responds with the similarity value
     * between two entities in the graph
    */
-  def similarity (method: String) = Action { request =>
+  def similarity (method: String, minimal: Option[String]) = Action { request =>
     val json = request.body.asJson
     json match {
       case Some(value) =>
         val tasks = (value \ "tasks").as[List[SimilaryTask]]
-        val result = tasks map { r => new SimilaryTask(r.uri1, r.uri2, Some(GADES.similarity(r.uri1, r.uri2, method))) }
-        Ok(Json.toJson(result))
+
+        minimal match {
+          case Some(v) =>
+            val result = tasks map { r => new SimilaryTask(None, None, Some(GADES.similarity(r.uri1.get, r.uri2.get, method))) }
+            Ok(Json.toJson(result))
+          case None =>
+            val result = tasks map { r => new SimilaryTask(r.uri1, r.uri2, Some(GADES.similarity(r.uri1.get, r.uri2.get, method))) }
+            Ok(Json.toJson(result))
+        }
       case None => BadRequest("No Json Sent!!!")
     }
   }
@@ -32,4 +39,4 @@ class SimilarityController @Inject() extends Controller {
 
 }
 
-case class SimilaryTask (uri1: String, uri2: String, value: Option[Double])
+case class SimilaryTask (uri1: Option[String], uri2: Option[String], value: Option[Double])
