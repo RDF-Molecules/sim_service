@@ -1,6 +1,8 @@
 package controllers
 
 import javax.inject._
+
+import play.Logger
 import play.api.libs.json._
 import play.api.mvc._
 import services.similarity.GADES
@@ -32,6 +34,23 @@ class SimilarityController @Inject() extends Controller {
         }
       case None => BadRequest("No Json Sent!!!")
     }
+  }
+
+  def initialize (model_1: String, model_2: Option[String]) = Action {
+
+    Logger.info(s"Initializing models with values $model_1 and $model_2")
+
+    var model_2_value = model_2 match {
+      case Some(value) => value
+      case None => ""
+    }
+
+    GADES.initialize(
+      model_1,
+      model_2_value
+    )
+
+    Ok
   }
 
   implicit val similarTaskReader = Json.reads[SimilaryTask]

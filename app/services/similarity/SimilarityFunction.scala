@@ -15,53 +15,71 @@ trait SimilarityTrait {
 
   def similarity(uri_1 :String, uri_2: String, method: String) : Double
 
+  def isInitialized() : Boolean
+
 }
 
 object GADES extends SimilarityTrait {
 
   private var o : MyOWLOntology = null
+  private var isInit = false
 
   override def initialize(model_1 :String, model_2 : String) {
 
     //Loading models
     val m1 = ModelFactory.createDefaultModel
-    Logger.info("Loading model 1")
-    m1.read(model_1)
 
-    if (!model_2.isEmpty) {
+    if (!model_1.isEmpty) {
+      Logger.info("Loading model 1")
+      m1.read(model_1)
+
+      if (!model_2.isEmpty) {
         Logger.info("Loading model 2")
         val m2 = ModelFactory.createDefaultModel
         m2.read(model_2)
         m1.add(m2)
         m2.close()
+      }
+
+      //Preparing the merged InputStream
+      val outstr = new ByteArrayOutputStream()
+      m1.write(outstr,"NT")
+      val instr = new ByteArrayInputStream(outstr.toByteArray)
+
+      //Loading the model on memory
+      o = new MyOWLOntology(instr, "http://dbpedia.org", "HermiT")
+
+      m1.close()
+      outstr.close()
+      instr.close()
+
+      this.isInit = true
+      Logger.info("Similarity Service Successfully Initialized!!!")
     }
-
-    //Preparing the merged InputStream
-    val outstr = new ByteArrayOutputStream()
-    m1.write(outstr,"NT")
-    val instr = new ByteArrayInputStream(outstr.toByteArray)
-
-    //Loading the model on memory
-    o = new MyOWLOntology(instr, "http://dbpedia.org", "HermiT")
-
-    m1.close()
-    outstr.close()
-    instr.close()
-
-    Logger.info("GADES successfully initialized!!!")
-
+    else
+      Logger.warn("No models configured!!! Similarity service will not work")
   }
 
   override def similarity(uri_1 :String, uri_2: String, method: String) : Double = {
-    Logger.info(s"Computing $method similarity for $uri_1 and $uri_2")
-    val individual_1 = o.getMyOWLIndividual(uri_1)
-    val individual_2 = o.getMyOWLIndividual(uri_2)
 
-    //Logger.info("taxSim:  "+individual_1.taxonomicSimilarity(individual_2))
-    //Logger.info("neighSim:  "+individual_1.similarityNeighbors(individual_2))
+    if (isInit) {
+      Logger.info(s"Computing $method similarity for $uri_1 and $uri_2")
+      val individual_1 = o.getMyOWLIndividual(uri_1)
+      val individual_2 = o.getMyOWLIndividual(uri_2)
 
-    individual_1.similarity(individual_2, method)
+      //Logger.info("taxSim:  "+individual_1.taxonomicSimilarity(individual_2))
+      //Logger.info("neighSim:  "+individual_1.similarityNeighbors(individual_2))
 
+      individual_1.similarity(individual_2, method)
+    }
+    else {
+      Logger.warn("Models has not been initialized!!!")
+      -1.0
+    }
+  }
+
+  def isInitialized() : Boolean = {
+    this.isInit
   }
 
 }
