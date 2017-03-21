@@ -11,7 +11,7 @@ import services.similarity.ontologyManagement.MyOWLOntology
   */
 trait SimilarityTrait {
 
-  def initialize(model_1 :String, model_2 : String)
+  def initialize(model_1 :String, model_2 : String, set_uris : String)
 
   def similarity(uri_1 :String, uri_2: String, method: String) : Double
 
@@ -24,34 +24,41 @@ object GADES extends SimilarityTrait {
   private var o : MyOWLOntology = null
   private var isInit = false
 
-  override def initialize(model_1 :String, model_2 : String) {
+  override def initialize(model_1 :String, model_2 : String, set_uris : String) {
 
     //Loading models
-    val m1 = ModelFactory.createDefaultModel
+    //val m1 = ModelFactory.createDefaultModel
 
     if (!model_1.isEmpty) {
       Logger.info("Loading model 1")
-      m1.read(model_1)
+      //m1.read(model_1)
 
-      if (!model_2.isEmpty) {
+      /*if (!model_2.isEmpty) {
         Logger.info("Loading model 2")
         val m2 = ModelFactory.createDefaultModel
         m2.read(model_2)
         m1.add(m2)
         m2.close()
-      }
+      }*/
 
       //Preparing the merged InputStream
-      val outstr = new ByteArrayOutputStream()
+      /*val outstr = new ByteArrayOutputStream()
       m1.write(outstr,"NT")
-      val instr = new ByteArrayInputStream(outstr.toByteArray)
+      val instr = new ByteArrayInputStream(outstr.toByteArray)*/
 
       //Loading the model on memory
-      o = new MyOWLOntology(instr, "http://dbpedia.org", "HermiT")
+      //o = new MyOWLOntology(instr, "http://dbpedia.org", "HermiT")
+      o = new MyOWLOntology(model_1, "http://dbpedia.org", "HermiT")
 
-      m1.close()
-      outstr.close()
-      instr.close()
+      if (!set_uris.isEmpty) {
+        Logger.info("Loading getComparableEntities")
+        o.addIndividuals(MyOWLOntology.getComparableEntities(set_uris))
+      }
+
+
+      //m1.close()
+      //outstr.close()
+      //instr.close()
 
       this.isInit = true
       Logger.info("Similarity Service Successfully Initialized!!!")

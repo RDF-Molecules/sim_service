@@ -43,8 +43,10 @@ public class MyOWLIndividual extends MyOWLLogicalEntity{
 	{
 		//BipartiteGraphMatching bpm = new BipartiteGraphMatching();
 		OneToManyMatching bpm = new OneToManyMatching();
-		if (neighbors == null)
+		if (neighbors == null) {
 			neighbors = o.getIndividualOWLLink(this);
+			//System.out.println("Nei: "+neighbors);
+		}
 		if (c.neighbors == null)
 			c.neighbors = o.getIndividualOWLLink(c);
 		try {

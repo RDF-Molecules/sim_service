@@ -36,7 +36,7 @@ class SimilarityController @Inject() extends Controller {
     }
   }
 
-  def initialize (model_1: String, model_2: Option[String]) = Action {
+  def initialize (model_1: String, model_2: Option[String], set_uris: Option[String]) = Action {
 
     Logger.info(s"Initializing models with values $model_1 and $model_2")
 
@@ -45,9 +45,15 @@ class SimilarityController @Inject() extends Controller {
       case None => ""
     }
 
+    var set_uris_value = set_uris match {
+      case Some(value) => value
+      case None => ""
+    }
+
     GADES.initialize(
       model_1,
-      model_2_value
+      model_2_value,
+      set_uris_value
     )
 
     Ok

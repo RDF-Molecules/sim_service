@@ -1,9 +1,6 @@
 package services.similarity.ontologyManagement;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -571,6 +568,7 @@ public class MyOWLOntology {
  		Set<OWLLink> ownLinks = new HashSet<OWLLink>();
  		Collection<OWLIndividual> sameInd = EntitySearcher.getSameIndividuals(ind.getOWLIndividual().getOWLNamedIndividual(), o);
  		sameInd.add(ind.getOWLNamedIndividual());
+		//System.out.println("sameInd: "+sameInd);
  		for (OWLIndividual oInd : sameInd)
  		{
 	 		Set<OWLObjectPropertyAssertionAxiom> axioms = o.getObjectPropertyAssertionAxioms(oInd);
@@ -1682,4 +1680,30 @@ public class MyOWLOntology {
 	
 		
 	}
+
+	public static Set<String> getComparableEntities(String listFile)
+	{
+	    try {
+
+	        Set<String> list = new HashSet<String>();
+
+            FileReader fr = new FileReader(listFile);
+            BufferedReader bf = new BufferedReader(fr);
+            String line;
+
+            while ((line = bf.readLine()) != null)
+            {
+                String standardURI = line.replace("<", "").replace(">", "");
+                list.add(standardURI);
+            }
+            bf.close();
+
+            return list;
+
+        }catch(Exception ex) {
+            ex.printStackTrace();
+        }
+        return  null;
+	}
+
 }

@@ -29,7 +29,8 @@ class ApplicationTimer @Inject() (clock: Clock, appLifecycle: ApplicationLifecyc
 
   GADES.initialize(
                     ConfigFactory.load.getString("similarity.function.model1_location"),
-                    ConfigFactory.load.getString("similarity.function.model2_location")
+                    ConfigFactory.load.getString("similarity.function.model2_location"),
+                    ConfigFactory.load.getString("similarity.function.set_uris")
   )
 
   // When the application starts, register a stop hook with the
