@@ -150,8 +150,14 @@ public class MyOWLOntology {
 				relations.put(current.toStringID(), new OWLRelation(current, this));
 			}
 			System.out.println("Relations read");
-			
+
 			Set<OWLClass> classes = o.getClassesInSignature();
+			//Fix: when there are not custom classes rather than both RDF + OWL standard classes the set is empty and does not allow to add other elements
+			if (classes.size() == 0) {
+				System.out.println("Classes In Signature are empty, loading an empty set");
+				classes = new HashSet<OWLClass>();
+			}
+
 			classes.add(factory.getOWLThing());
 			for (Iterator<OWLClass> i = classes.iterator(); i.hasNext();)
 			{
