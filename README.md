@@ -50,6 +50,7 @@ http://localhost:9000/similarity/initialize?model_1=/some_path/rdf_graph_with_mo
 Examples of RDF graphs can be found here:
 
 DBpedia - Drugbank Drugs molecules
+
 https://github.com/RDF-Molecules/Test-DataSets/blob/master/DrugBank/together_enriched.zip
 
 ### Request
@@ -100,5 +101,5 @@ An extra element "value" will be added to the json containing the similarity val
 
 ## License
 
-* Copyright (C) 2016-2017 EIS Uni-Bonn
+* Copyright (C) 2016-2018 EIS/SDA Uni-Bonn
 * Licensed under the Apache 2.0 License
