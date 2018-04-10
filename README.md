@@ -30,8 +30,7 @@ Send POST request to the following address http://localhost:9000/similarity/(fun
 The SimMol service requires one RDF graph containing the RDF molecules to be compared.
 The path of the RDF graph has to be configured before using the service, there are two ways of configuring the service:
 
-1. Configuration file:
-⋅⋅⋅In application.config configure either two datasets or just one dataset containing the RDF Molecules of data. The datasets will be loaded in the services at starting time.
+1. Configuration file: In application.config configure either two datasets or just one dataset containing the RDF Molecules of data. The datasets will be loaded in the services at starting time.
 
 ```
 similarity.function {
@@ -42,16 +41,15 @@ similarity.function {
 
 }
 ```
-2. initialize service
-⋅⋅⋅A service to initialize the RDF graph is provided as well. 
+2. initialize service: ⋅A service to initialize the RDF graph is provided as well. 
 
-⋅⋅⋅http://localhost:9000/similarity/initialize?model_1=/some_path/rdf_graph_with_molecules.nt
+    http://localhost:9000/similarity/initialize?model_1=/some_path/rdf_graph_with_molecules.nt
 
 Examples of RDF graphs can be found here:
 
 * DBpedia - Drugbank Drugs molecules
 
-⋅⋅⋅https://github.com/RDF-Molecules/Test-DataSets/blob/master/DrugBank/together_enriched.zip
+    https://github.com/RDF-Molecules/Test-DataSets/blob/master/DrugBank/together_enriched.zip
 
 ### Request
 
